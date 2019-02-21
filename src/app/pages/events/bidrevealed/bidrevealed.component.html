@@ -1,0 +1,45 @@
+<div class="h2 font-weight-bold m-30 mb-5 px-4 py-3 bg-lightest text-primary">Unsealed Bids</div>
+
+<h2 class="h3 font-weight-bold">Unsealed Bid events emitted dring the last 24 hours (approximately).</h2>
+<p class="mb-4"></p>
+
+
+<div class="table table-responsive form-group">
+  <p-table #table class="table tbl-filter consents" rowHover="true"
+    [columns]="cols" [responsive]="true" [value]="this.unsealedBids">
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Owner</th>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+        <th>Block</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData" *ngIf="rowData">
+        <td colspan="5">
+          Hash: <a href="https://etherscan.io/enslookup?q={{rowData['hash']}}" target="_blank"><span>{{rowData['hash']}}</span></a>
+        </td>
+      </tr>
+      <tr [pSelectableRow]="rowData" *ngIf="rowData">
+        <td>
+          <a href="https://etherscan.io/address/{{rowData['owner']}}" target="_blank"><span>{{rowData['owner']}}</span></a>
+        </td>
+        <td *ngFor="let col of columns">
+          <span>{{rowData[col.field]}}</span>      
+        </td>
+        <td>
+          <a href="https://etherscan.io/block/{{rowData['blocknumber']}}" target="_blank"><span>{{rowData['blocknumber']}}</span></a>
+        </td>
+      </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="columns.length + 1" class="emptyTable">No data to display</td>
+      </tr>
+    </ng-template>
+  </p-table>
